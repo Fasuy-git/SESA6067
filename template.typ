@@ -7,6 +7,10 @@
 #import "@preview/cetz:0.4.2"
 #import "@preview/cetz:0.4.2": canvas, draw
 
+#import "@preview/numty:0.1.0" as nt
+
+#import "@preview/mannot:0.3.2": *
+
 // Place custom functions here
 
 #let lecture(title, level, week-num) = {
@@ -34,7 +38,6 @@
   )
 }
 
-#import "@preview/numty:0.1.0" as nt
 
 #let orbit(
   x_center,
