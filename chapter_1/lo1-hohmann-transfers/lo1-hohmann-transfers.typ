@@ -42,14 +42,14 @@ A circular Hohmann transfer is used to move between two circular orbits via one 
 
     // Elliptical Orbit
     let e = (r_a - r_p) / (r_a + r_p)
-    orbit(0, 0, r_p, e, dash_type: "dashed", initial_angle: 180, final_angle: 360)
+    orbit(0, 0, r_p, e, dash_type: "dashed", initial_angle: 0, final_angle: 180)
   }),
   caption: [Schematic diagram of a circular Hohmann Transfer.],
   supplement: [Figure],
   kind: figure,
 ) <1-circular-hohmann>
 
-In order to calculate the $Delta V$ required for the two burns in this manuever the polar orbit equation can be used, shown in *@1-hohmann-derivation-1*, note that at perigee for the elliptical transfer orbit $theta = 0 degree$
+In order to calculate the $Delta v$ required for the two burns in this manuever the polar orbit equation can be used, shown in *@1-hohmann-derivation-1*, note that at perigee for the elliptical transfer orbit $theta = 0 degree$
 
 $
   r =p/(1 + e cos(theta)) =(a(1-e^2))/(1 + e cos(theta))=(h^2"/"mu)/(1 + e cos(theta))
@@ -125,8 +125,8 @@ However, there is a caveat in that it is not initially clear which transfer orbi
       color: orange,
       mark_color: orange,
       width: 2pt,
-      initial_angle: 180,
-      final_angle: 360,
+      initial_angle: 0,
+      final_angle: 180,
     )
 
     // Transfer Orbit #2
@@ -139,8 +139,8 @@ However, there is a caveat in that it is not initially clear which transfer orbi
       color: green,
       mark_color: green,
       width: 2pt,
-      initial_angle: 180,
-      final_angle: 360,
+      initial_angle: 0,
+      final_angle: 180,
     )
 
     // Lower and Higher Orbits
@@ -188,8 +188,8 @@ The same equations can also be used for transferring between an elliptical/circu
         r,
         e_1,
         inclination: 180deg,
-        initial_angle: 180,
-        final_angle: 360,
+        initial_angle: 0,
+        final_angle: 180,
         dash_type: "dashed",
         color: blue,
         mark_color: blue,
@@ -228,8 +228,8 @@ The same equations can also be used for transferring between an elliptical/circu
         r,
         e_1,
         inclination: 180deg,
-        initial_angle: 180,
-        final_angle: 360,
+        initial_angle: 0,
+        final_angle: 180,
         dash_type: "dashed",
         color: blue,
         mark_color: blue,
@@ -307,8 +307,8 @@ If the maximum number of burns is increased to three, then in some cases the *bi
       color: green,
       mark_color: green,
       width: 2pt,
-      initial_angle: 180,
-      final_angle: 360,
+      initial_angle: 0,
+      final_angle: 180,
     )
 
     // Transfer Orbit #2
@@ -321,8 +321,8 @@ If the maximum number of burns is increased to three, then in some cases the *bi
       color: blue,
       mark_color: blue,
       width: 2pt,
-      initial_angle: 0,
-      final_angle: 180,
+      initial_angle: 180,
+      final_angle: 360,
       inclination: 90deg,
     )
 
@@ -410,7 +410,7 @@ If the maximum number of burns is increased to three, then in some cases the *bi
   kind: figure,
 ) <1-bielliptic-hohmann>
 
-As $r_b$ goes to infinity, the $Delta V$ required at *B* goes to zero, allowing for a cheaper burn.  However, a bi-elliptic Hohmann transfer is not always more efficient and so a derivation is required.
+As $r_b$ goes to infinity, the $Delta v$ required at *B* goes to zero, allowing for a cheaper burn.  However, a bi-elliptic Hohmann transfer is not always more efficient and so a derivation is required.
 
 To start with, it is observed there are two transfer orbits $T_1$ from $A -> B$ and $T_2$ from $B -> C$, the perigee and apogee radii of these two transfer orbits is shown in *@1-bielliptic-derivation-1*.
 
@@ -418,46 +418,46 @@ $
   T_1 cases(r_a = r_B, r_p = r_A) quad quad T_2 cases(r_a = r_C, r_p = r_B)
 $<1-bielliptic-derivation-1>
 
-From these definitions the change in velocity at point *A* ($Delta V_A$) can be calculated and is shown in *@1-bielliptic-derivation-2* (Note, $V_0$ = velocity in origin orbit, $V_1$ = perigee velocity in $T_1$).
+From these definitions the change in velocity at point *A* ($Delta v_A$) can be calculated and is shown in *@1-bielliptic-derivation-2* (Note, $V_0$ = velocity in origin orbit, $V_1$ = perigee velocity in $T_1$).
 
 $
   V_0 = sqrt(mu/ r_A) quad quad V_1 = h/r_p = 1/r_p sqrt(2 mu (r_a r_p)/(r_a + r_p)) = sqrt(2 mu/r_p^2 (r_a r_p)/(r_a + r_p)) = sqrt(2 mu/r_A (r_B)/(r_A + r_B))
   \
-  Delta V_A = V_1 - V_0 = sqrt(2 mu/r_A (r_B)/(r_A + r_B)) - sqrt(mu/ r_A) = sqrt(mu/ r_A) [sqrt(2 (r_B)/(r_A + r_B)) - 1]
+  Delta v_A = V_1 - V_0 = sqrt(2 mu/r_A (r_B)/(r_A + r_B)) - sqrt(mu/ r_A) = sqrt(mu/ r_A) [sqrt(2 (r_B)/(r_A + r_B)) - 1]
   \
-  therefore Delta V_A = V_0 [sqrt(2 (r_B)/(r_A + r_B)) - 1] quad "Where" V_0 = sqrt(mu/ r_A)
+  therefore Delta v_A = V_0 [sqrt(2 (r_B)/(r_A + r_B)) - 1] quad "Where" V_0 = sqrt(mu/ r_A)
 $<1-bielliptic-derivation-2>
 
-The derivation for the change in velocity at point *B* ($Delta V_B$) can be determined similarly, and is shown in *@1-bielliptic-derivation-3* (Note, $V_1$ = apogee velocity in $T_1$, $V_2$ = apogee velocity in $T_2$).
+The derivation for the change in velocity at point *B* ($Delta v_B$) can be determined similarly, and is shown in *@1-bielliptic-derivation-3* (Note, $V_1$ = apogee velocity in $T_1$, $V_2$ = apogee velocity in $T_2$).
 
 $
   V_1 = h/r_a = sqrt(2 mu/r_B (r_A)/(r_A + r_B)) quad quad
   V_2 = h/r_a = sqrt(2 mu/r_B (r_C)/(r_C + r_B)) \
-  Delta V_B = V_2 - V_1 = sqrt(2 mu/r_B (r_C)/(r_C + r_B)) - sqrt(2 mu/r_B (r_A)/(r_A + r_B))\
-  therefore Delta V_B = sqrt(2 mu/r_B) [sqrt((r_C)/(r_C + r_B)) - sqrt((r_A)/(r_A + r_B))]
+  Delta v_B = V_2 - V_1 = sqrt(2 mu/r_B (r_C)/(r_C + r_B)) - sqrt(2 mu/r_B (r_A)/(r_A + r_B))\
+  therefore Delta v_B = sqrt(2 mu/r_B) [sqrt((r_C)/(r_C + r_B)) - sqrt((r_A)/(r_A + r_B))]
 $<1-bielliptic-derivation-3>
 
-The derivation for the change in velocity at point *C* ($Delta V_C$) can be determined similarly, and is shown in *@1-bielliptic-derivation-4* (Note, $V_2$ = perigee velocity in $T_2$, $V_3$ = velocity in destination orbit (further note that $V_C = V_2 - V_3$ to keep $Delta V$ +ve)).
+The derivation for the change in velocity at point *C* ($Delta v_C$) can be determined similarly, and is shown in *@1-bielliptic-derivation-4* (Note, $V_2$ = perigee velocity in $T_2$, $V_3$ = velocity in destination orbit (further note that $V_C = V_2 - V_3$ to keep $Delta v$ +ve)).
 
 $
   V_2 = h/r_p = sqrt(2 mu/r_C (r_B)/(r_C + r_B)) quad quad
   V_3 = sqrt(2 mu/r_C) \
-  Delta V_C = V_2 - V_3 = sqrt(mu/ r_C) [sqrt(2 (r_B)/(r_C + r_B)) - 1]
+  Delta v_C = V_2 - V_3 = sqrt(mu/ r_C) [sqrt(2 (r_B)/(r_C + r_B)) - 1]
 $<1-bielliptic-derivation-4>
 
-The total $Delta V$ of this manuever would be the sum of *@1-bielliptic-derivation-2*, *@1-bielliptic-derivation-3* & *@1-bielliptic-derivation-4*, however some substitutions are made to make the resulting equations simpler, these substitutions are shown in *@1-bielliptic-derivation-5*.
+The total $Delta v$ of this manuever would be the sum of *@1-bielliptic-derivation-2*, *@1-bielliptic-derivation-3* & *@1-bielliptic-derivation-4*, however some substitutions are made to make the resulting equations simpler, these substitutions are shown in *@1-bielliptic-derivation-5*.
 
 $
   "Let" quad beta = r_B / r_A quad quad alpha = r_C /r_A quad quad V_0 = sqrt(mu/ r_A) quad therefore \
-  Delta V_A = V_0 [sqrt(2 (beta)/(beta + 1)) - 1] \
-  Delta V_B = V_0 sqrt(2 /(beta))[sqrt((alpha)/(beta + alpha)) - sqrt((1)/(beta + 1))] \
-  Delta V_C = V_0 sqrt(1/alpha) [sqrt(2 (beta)/(beta + alpha)) - 1]
+  Delta v_A = V_0 [sqrt(2 (beta)/(beta + 1)) - 1] \
+  Delta v_B = V_0 sqrt(2 /(beta))[sqrt((alpha)/(beta + alpha)) - sqrt((1)/(beta + 1))] \
+  Delta v_C = V_0 sqrt(1/alpha) [sqrt(2 (beta)/(beta + alpha)) - 1]
 $<1-bielliptic-derivation-5>
 
 Note that in *@1-bielliptic-derivation-5* a common term of $V_0$ can be extracted. Adding these expressions whilst multiplying $V_B$ by $sqrt(2 /(beta))$ and $V_C$ by $sqrt(1/alpha)$ yields *@1-bielliptic-derivation-6*.
 
 $
-  Delta V = Delta V_A + Delta V_B + Delta V_C \
+  Delta v = Delta v_A + Delta v_B + Delta v_C \
   #v(5em)
   = V_0 [
     markhl(sqrt((2beta)/(beta + 1)), color: #aqua, tag: #<5>)
@@ -484,10 +484,10 @@ $
   therefore markhl(sqrt((2beta^2)/(beta(beta + 1))) - sqrt((2)/(beta(beta + 1))), color: #aqua) = sqrt(2/(beta(beta + 1))) (beta - 1)
 $<1-bielliptic-derivation-6>
 
-Combining together the simplified expressions in *@1-bielliptic-derivation-6* yield the final expression for the $Delta V$ cost for a bi-elliptic Hohmann transfer shown in *@1-bielliptic-derivation-7*
+Combining together the simplified expressions in *@1-bielliptic-derivation-6* yield the final expression for the $Delta v$ cost for a bi-elliptic Hohmann transfer shown in *@1-bielliptic-derivation-7*
 
 $
-  Delta V = V_0 [sqrt((2(alpha + beta))/(alpha beta)) - (1 + sqrt(alpha))/sqrt(alpha) +sqrt(2/(beta(beta + 1))) (beta - 1)]
+  Delta v = V_0 [sqrt((2(alpha + beta))/(alpha beta)) - (1 + sqrt(alpha))/sqrt(alpha) +sqrt(2/(beta(beta + 1))) (beta - 1)]
   \ "Where" : quad quad
   V_0 = sqrt(mu/ r_A) quad quad beta = r_B / r_A quad quad alpha = r_C /r_A
 $<1-bielliptic-derivation-7>

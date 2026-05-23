@@ -42,3 +42,5 @@ For this module, each manuever is assumed to be impulsive (kick manuever). This 
 #pagebreak()
 
 #include "lo1-hohmann-transfers/lo1-hohmann-transfers.typ"
+
+#include "lo1-hohmann-transfers/lo2-phasing-maneuvers.typ"
