@@ -364,10 +364,9 @@ $<2-apse-line-case>
 This maneuver is shown visually in *@2-apse-line-case-fig*  where the second orbit is different. Note the orange line would be an equivalent Hohmann manuever. Despite the *Hohmann manuever being more efficient*, there may be cases where this apse line maneuver is nessicary (only one burn possible, restricted zones, time constraints).
 
 #figure(
-  image("images/1-apse-line-case.png", width: 50%),
+  image("images/1-apse-line-case.png", width: 40%),
   caption: [Schematic diagram showing an apse line manuever where $eta = 0 degree$ and the orbits are different.],
   supplement: [Figure],
   kind: figure,
 )<2-apse-line-case-fig>
 
-=== Inverse Apse Line Manuever
