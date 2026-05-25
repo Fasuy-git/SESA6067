@@ -106,7 +106,7 @@
 #set math.vec(delim: "[")
 
 #include "chapter_1/chapter_1.typ"
-//#include "chapter_2/chapter_2.typ"
+#include "chapter_2/chapter_2.typ"
 //#include "chapter_3/chapter_3.typ"
 //#include "chapter_4/chapter_4.typ"
 //#include "chapter_5/chapter_5.typ"
