@@ -121,3 +121,94 @@ A more complex method for modelling spherical bodies is spherical harmonics. Eff
 )<3-spherical-harmonics>
 
 The most significant of these perturbations is J2 which describes the bulging out of the equator of the planet due to its rotation. Its effect on the orbit is a net precession of teh RAAN (right accension of the ascending node ($Omega$) is the point where the orbit cuts the equator). This allows for sun synchronous orbits where the position of the sun relative to the spacecraft doesn't change.
+
+=== Third Body Perturbations
+
+Apart from the central body, the spacecraft also feels a gravitational force from third bodies. To calculate the magnitude and direction of these forces, an Ephemerides table is used which gives the location of a given planet at a certain time. The acceleration on the two main bodies is shown in *@3-threebody-eq1* and graphically in *@3-three-body-image*.
+
+#grid(
+  columns: (0.6fr, 0.4fr),
+  column-gutter: 1cm,
+  [#v(5em)$
+      accent(a, ->)_1 =
+      G m_2 (accent(R, ->)_2 - accent(R, ->)_1)/(|accent(R, ->)_2 - accent(R, ->)_1|^3)
+      +
+      G m_3 (accent(R, ->)_3 - accent(R, ->)_1)/(|accent(R, ->)_3 - accent(R, ->)_1|^3)
+      \
+      accent(a, ->)_2 =
+      G m_1 (accent(R, ->)_1 - accent(R, ->)_2)/(|accent(R, ->)_1 - accent(R, ->)_2|^3)
+      +
+      G m_3 (accent(R, ->)_3 - accent(R, ->)_2)/(|accent(R, ->)_3 - accent(R, ->)_2|^3)
+    $<3-threebody-eq1>
+  ],
+  [#figure(
+    image("images/3-three-body-equation.png", width: 80%),
+    caption: [Schematic diagram of the three body problem.],
+    supplement: [Figure],
+    kind: figure,
+  )<3-three-body-image>],
+)
+
+The effect of the third body solely on the orbit of the spacecraft can be obtained by differentiating the difference in accelerations, shown in *@3-threebody-eq2*. This is when the spacecraft is set as the reference and the non-keplerian portion of the acceleration is singled out.
+
+$
+  accent(a, ->) = accent(a, ->)_2 - accent(a, ->)_1 = accent(a, ->)_"Keplerian" + accent(a, ->)_"third body"
+  quad
+  accent(a, ->)_"third body" = mu_3 ((accent(r, ->)_3 - accent(r, ->))/(|accent(r, ->)_3 - accent(r, ->)|^3) - accent(r, ->)/(|accent(r, ->)_3|^3))
+$<3-threebody-eq2>
+
+Note that in *@3-threebody-eq2*, the first term describes the acceleration of the spacecraft and the second the acceleration of the primary.
+
+=== Specialized Orbit Perturbations
+
+- *Electromagnetic Drag*: Conductor moving through a magnetic field sees eddy currents produced within it. This acts to create a drag like effect.
+
+- *Special and General Relativity*: Travelling close to the speed of light changes motion form Newton. Travelling close to the speed of light changes the motion as well.
+
+- *Yarkovsky Effect and YORP*: Anisotropic heat distribution of rotating body leads to effective radiation pressure causing a perturbation on asteroids. YORP causes spinning of asteroids due to a similar effect, over centuries may be the reason they break up.
+
+== Orbit Propagation
+
+To implement the force models mentioned in the perturbation section, there needs to be a method to transform the force models into orbital motion. The three methods to do this are:
+
+- *Analytical solutions*: Close formed equations that give exact motion.
+- *Numerical methods*: Use an integrator to propagate motion
+- *Averaged semi-numerical methods*: Use a mixture of both above methods to average out motion where possible allowing for larger numerical timesteps.
+
+There also exits two types of perturbation theory, these are:
+
+- *Special Perturbation Theory*: Numerically integrate a perturbation as a force. good for visualisation.
+- *General Perturbation Theory*: Expand a series of perturbations as forces or potentials. Allow for broader analysis of inputs.
+
+=== Special Perturbation
+==== Direct Numerical Integration
+
+In this methods the equation of motion with perturbation terms are directly appended onto the equations of motion, forming a 2nd order ODE in 3 dimensions (x,y,z) or a first order ODE in 6 dimensions (x,y,z and velocities). Though simple to implement, this scheme is slow and can drift over time.
+
+==== Encke's Method
+
+This method uses the known analytical solution and then uses the difference between the perturbed motion and the analytical solution to propagate motion. This method is better than direct numerical integration but is harder to implement, requiring normalisation after a while.
+
+=== General Perturbation
+
+Instead of the previous methods, this scheme utilizes a 6D phase space where small perturbations yield small changes in the orbit. The Osculating elements allow for movement from one orbit to another due to a perturbation via a tangential elliptical orbit at that point. These osculating elements are shown in *@3-keplerian-element-rates* and *@3-osculating-elements*.
+
+
+#grid(
+  columns: (0.4fr, 0.6fr),
+  column-gutter: 1cm,
+  [#figure(
+    image("images/3-kaplerian-rates.png", width: 20%),
+    caption: [Kaplerian element rates.],
+    supplement: [Figure],
+    kind: figure,
+  )<3-keplerian-element-rates>],
+  [#figure(
+    image("images/3-osculating-eqs-motion.png", width: 120%),
+    caption: [Equations of motion of osculating elements.],
+    supplement: [Figure],
+    kind: figure,
+  )<3-osculating-elements>],
+)
+
+Note that the perturbing accelerations are in the spacecraft plane coordinate system. Instead of Gauss's formula, Lagrange provides a similar expression only limited to potentials. These equations can be solved analytically but are typically very large, so instead numerical methods or a hybrid averaging method are used.
