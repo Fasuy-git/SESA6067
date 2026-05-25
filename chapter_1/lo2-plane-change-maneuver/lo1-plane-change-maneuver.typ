@@ -22,7 +22,7 @@ A plane change manoeuvre is a three dimensional manoeuvre out of the plane of th
 
 ==== Rigid Rotation of the Orbit
 
-A simple plane change manoeuvre is one where the orbit is only rotated and the shape (apogee/perigee) about a rotation line which is a line in the original orbit plane that must intersect the orbit body. This means there are only ever two points within an orbit where a plane change manoeuvre can occur, this is shown in *@3-rigid-plane-change*.
+A simple plane change manoeuvre is one where the orbit is only rotated and the shape (apogee/perigee) about a rotation line which is a line in the original orbit plane that must intersect the orbit body. This means there are only ever two points `with`in an orbit where a plane change manoeuvre can occur, this is shown in *@3-rigid-plane-change*.
 
 #figure(
   image("images/2-rigid-plane-change-schematic.png", width: 40%),
@@ -135,3 +135,79 @@ Plotting various values of $rho$ and $delta$ yield the plot shown in *@3-three-i
   supplement: [Figure],
   kind: figure,
 )<3-three-impulse-plane-change-plot>
+
+==== Hohmann Transfer with Split Change Manoeuvre
+
+In a combination of both of these manoeuvres, it is not immediately clear for a combination of $r_1$ and $r_2$ where the plane change manoeuvre should be. In reality the plane change manoeuvre can be done at each burn by a certain angle. This manoeuvre is shown in *@3-split-plane-change*.
+
+#figure(
+  image("images/2-split-change-manouver.png", width: 40%),
+  caption: [Schematic view of a split plane change manoeuvre combined with a Hohmann transfer.],
+  supplement: [Figure],
+  kind: figure,
+)<3-split-plane-change>
+
+The angular momentum and orbital velocities of each point of interest in each orbit are shown in *@3-split-change-eq-1*.
+
+$
+  h_0 = sqrt(mu r_1)
+  quad quad h_1 = sqrt(2 mu (r_1 r_2)/(r_1 + r_2))
+  quad quad h_2 = sqrt(mu r_2)
+  \
+  quad quad v_0 = h_0/r_1
+  quad quad v_(0,t) = h_1/r_1
+  quad quad v_(2,t) = h_1/r_2
+  quad quad v_2 = h_2/r_2
+$<3-split-change-eq-1>
+
+The proportion of the plane change that would be done at each manoeuvre is given by the $alpha$ parameter. Using this the $Delta v$ for the entire manoeuvre can be determined, this is shown in *@3-split-change-eq-2*.
+
+$
+  delta_0 = alpha delta quad quad delta_2 = (1-alpha) delta \
+  Delta v_0 = sqrt(
+    v_0^2 + v_(0,t)^2
+    - 2 v_0 v_(0,t) cos(delta_0)
+  )
+  quad quad
+  Delta v_2 = sqrt(
+    v_2^2 + v_(2,t)^2
+    - 2 v_2 v_(2,t) cos(delta_2)
+  ) \
+  Delta v = Delta v_0 + Delta v_2 = sqrt(
+    v_0^2 + v_(0,t)^2
+    - 2 v_0 v_(0,t) cos(delta_0)
+  ) + sqrt(
+    v_2^2 + v_(2,t)^2
+    - 2 v_2 v_(2,t) cos(delta_2)
+  )
+$<3-split-change-eq-2>
+
+The value of $Delta v$ can be minimized by altering the value  of $alpha$, the resulting minimization equation is shown in *@3-split-change-eq-3*. Note that the equation itself would need some numerical analysis to solve for the $alpha$ value that yields the minimum value of $Delta v$.
+
+$
+  d / (d alpha) (Delta v) =
+  (v_0 v_(0,t) delta sin(delta_0))/(sqrt(
+    v_0^2 + v_(0,t)^2
+    - 2 v_0 v_(0,t) cos(delta_0)
+  ))
+  -
+  (v_2 v_(2,t) delta sin(delta_2))/(sqrt(
+    v_2^2 + v_(2,t)^2
+    - 2 v_2 v_(2,t) cos(delta_2)
+  )) = 0
+$<3-split-change-eq-3>
+
+== When and How to do Manoeuvres
+
+Doing energy gain manoeuvres at perigee results in more energy gain, this is called the Oberth effect. This occurs as kinetic energy is proportional to the square of the velocity not the velocity on its own. An example derivation is shown in *@3-oberth*.
+
+$
+  Delta E = 1/2 m (v + Delta v)^2 - 1/2 m v^2
+  = 1/2 m (v^2 + 2 v Delta v + Delta v^2) - 1/2 m v^2
+  \
+  = 1/2 m (v^2 + 2 v Delta v + Delta v^2 - v^2) = 1/2m(2 v Delta v + Delta v^2 )
+$<3-oberth>
+
+The last equation in *@3-oberth* has $v$ within it meaning a higher velocity results in a higher energy gain. Combining manoeuvres together in a single point is often advantageous for both the Oberth effect as well as for reducing vector addition losses. However this is not always the case, for example plane change manoeuvres are more efficient at high apogees as their $Delta v$ cost is proportional to the velocity.
+
+#pagebreak()
